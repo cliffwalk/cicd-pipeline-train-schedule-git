@@ -15,6 +15,13 @@ node {
 
 task build
 
+task npmInstall(overwrite: true, type: NpmTask, dependsOn: 'npmSetup') {
+    inputs.file('package.json')
+    outputs.upToDateWhen { file('node_modules').exists() }
+
+    npmCommand = ['install']
+}
+
 task zip(type: Zip) {
  from ('.') {
    include '*'
